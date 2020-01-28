@@ -1,11 +1,9 @@
-import axios from "axios";
-
+import Axios from "axios";
 export const axiosWithAuth = () => {
-  return axios.create({
-    //config object
+  return Axios.create({
     baseURL: "http://localhost:5000",
     headers: {
-      authentication: localStorage.getItem("token")
+      Authorization: localStorage.getItem("token")
     }
   });
 };

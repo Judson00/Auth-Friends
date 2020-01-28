@@ -1,20 +1,27 @@
 import React, { useState } from "react";
 import { Form, Field, Formik, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { useHistory } from 'react-router-dom';
 import { axiosWithAuth } from "../utils/axiosWithAuth";
 import Axios from "axios";
 
+
+
 const Login = ({ values, errors, touched, status }) => {
+  const { push } = useHistory();
+
   const [message, setMessage] = useState([]);
 
   //Submits ----
   const handleSubmit = (values, { setStatus, resetForm }) => {
     Axios.post(` http://localhost:5000/api/login`, values)
       .then(res => {
+        localStorage.setItem('token', res.data.payload)
         setMessage([...message, values]);
         setStatus(res.data);
         resetForm();
         console.log(res, `success`);
+        push("/friends");
       })
       .catch(err => console.log(err.response))
       .finally();
@@ -22,18 +29,8 @@ const Login = ({ values, errors, touched, status }) => {
   // Checking Validations !! ----
   const SignupSchema = () =>
     Yup.object().shape({
-      name: Yup.string().min(3, `Name Too Short!`),
-      email: Yup.string()
-        .email("Invalid email")
-        .required("Email Required"),
+      username: Yup.string().min(3, `Name Too Short!`),
       password: Yup.string().required(`Password required`),
-      terms: Yup.bool()
-        .test(
-          "consent",
-          "You have to agree with our Terms and Conditions!",
-          value => value === true
-        )
-        .required(`You have to agree with Terms of Service!`)
     });
   // Return STARTS HERE  - -------------
   return (
@@ -41,7 +38,7 @@ const Login = ({ values, errors, touched, status }) => {
       <h1>My Form</h1>
       <Formik
         initialValues={{ username: ``, password: `` }}
-        validationSchema={SignupSchema}
+        // validationSchema={SignupSchema}
         // validate={validate}
         onSubmit={handleSubmit}>
         {({ values }) => {
