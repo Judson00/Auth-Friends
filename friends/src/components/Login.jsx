@@ -1,11 +1,8 @@
 import React, { useState } from "react";
+import { useHistory } from 'react-router-dom';
+import Axios from "axios";
 import { Form, Field, Formik, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { useHistory } from 'react-router-dom';
-import { axiosWithAuth } from "../utils/axiosWithAuth";
-import Axios from "axios";
-
-
 
 const Login = ({ values, errors, touched, status }) => {
   const { push } = useHistory();
@@ -26,21 +23,22 @@ const Login = ({ values, errors, touched, status }) => {
       .catch(err => console.log(err.response))
       .finally();
   };
+
   // Checking Validations !! ----
   const SignupSchema = () =>
     Yup.object().shape({
       username: Yup.string().min(3, `Name Too Short!`),
       password: Yup.string().required(`Password required`),
     });
+
   // Return STARTS HERE  - -------------
   return (
     <div>
       <h1>My Form</h1>
       <Formik
         initialValues={{ username: ``, password: `` }}
-        // validationSchema={SignupSchema}
-        // validate={validate}
         onSubmit={handleSubmit}>
+
         {({ values }) => {
           return (
             <Form className='formbody'>
@@ -50,6 +48,7 @@ const Login = ({ values, errors, touched, status }) => {
                 type='text'
                 placeholder='name'
               />
+
               {console.log(values, "values")}
               <ErrorMessage name='name' component='div' className='red' />
               <Field
@@ -58,12 +57,15 @@ const Login = ({ values, errors, touched, status }) => {
                 type='password'
                 placeholder='Password'
               />
+
               <ErrorMessage name='password' component='div' className='red' />
               &nbsp;
               <input type='submit' />
             </Form>
+
           );
         }}
+
       </Formik>
       {/* Map starts here !!!!! */}
       <div>
@@ -75,7 +77,9 @@ const Login = ({ values, errors, touched, status }) => {
           </div>
         ))}
       </div>
+
     </div>
   );
 };
+
 export default Login;

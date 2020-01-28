@@ -1,4 +1,5 @@
 const uuidv4 = require("uuid/v4");
+
 const initialState = {
   friend: {
     id: uuidv4(),
@@ -6,10 +7,12 @@ const initialState = {
     age: 24,
     email: "joe@lambdaschool.com"
   },
+
   isloading: false,
   friends: [],
   error: {}
 };
+
 export default (state = initialState, action) => {
   switch (action.type) {
     case "DATA_START":

@@ -1,4 +1,5 @@
 import { axiosWithAuth } from "../utils/axiosWithAuth";
+
 export const friendsFetch = () => dispatch => {
   dispatch({ type: "DATA_START" });
   axiosWithAuth()
