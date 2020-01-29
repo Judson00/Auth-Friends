@@ -25,7 +25,6 @@ const Login = ({ values, errors, touched, status }) => {
   };
 
   // Checking Validations !! ----
-  const SignupSchema = () =>
     Yup.object().shape({
       username: Yup.string().min(3, `Name Too Short!`),
       password: Yup.string().required(`Password required`),

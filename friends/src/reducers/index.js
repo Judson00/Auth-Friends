@@ -3,9 +3,9 @@ const uuidv4 = require("uuid/v4");
 const initialState = {
   friend: {
     id: uuidv4(),
-    name: "Joe",
-    age: 24,
-    email: "joe@lambdaschool.com"
+    name: "",
+    age: null,
+    email: ""
   },
 
   isloading: false,
@@ -32,7 +32,39 @@ export default (state = initialState, action) => {
         isloading: false,
         friends: action.payload
       };
+    case "FORM_STATE":
+      return{
+        ...state,
+        friend: {
+          ...state.friend,
+          [action.name]: action.value
+        }
+      }
+    case "EDIT_FORM":
+    return{
+      ...state,
+      editing:
+        state.editing === false ? !state.editing : (state.editing = true),
+        friend: {
+          ...state.friend,
+          id: action.id,
+          name: action.name,
+          age: action.age,
+          email: action.email
+        }
+    };
+    case "RESET_FORM":
+      return{
+        ...state,
+        friend: {
+          id: uuidv4(),
+          name: "",
+          age: null,
+          email: ""
+        }
+      }
     default:
       return state;
   }
 };
+
