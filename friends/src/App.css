@@ -1,0 +1,19 @@
+.App {
+  text-align: center;
+}
+
+div.smurfs{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
